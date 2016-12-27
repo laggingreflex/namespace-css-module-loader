@@ -32,11 +32,11 @@ a different hash for each ***file*** shared by all rules in it:
   background: red;
 }
 ```
-The hash is available as named export: `{ root }`. You only need to include this in the parent `div`:
+The hash is available as named export: `{style}`. You only need to include this in the parent `div`:
 ```js
-import { root } from './style.scss';
+import {style} from './style.scss';
 export default () => <div>
-    <div className={root}>
+    <div className={style}>
         <div class='a'></div> // blue
         <div class='a'></div> // red
     </div>
@@ -61,14 +61,16 @@ Use it after pre-processors, it only works on pure CSS
 loader: 'css-loader?importLoaders=3!postcss-loader!namespace-css-module-loader!sass-loader'
                                          ...      <-          ^               <-  pre
 ```
-Pass an `'id=…'` to change the default named import `{ root }`:
+Pass an `'id=…'` to change the default named import `{style}`:
 ```json
-loader: 'css-loader!namespace-css-module-loader?id=main'
+loader: 'css-loader!namespace-css-module-loader?id=root'
 ```
 ```js
-import { main } from './style.scss';
+import {root} from './style.scss';
+...
+<div className={root}>
 ```
-**DO NOT** use `'?modules'` option in `css-loader`. This module works by prefixing every rule with `":local(.root) "` which the `css-loader` then changes to a hash and makes it available as `{root}`
+**DO NOT** use `'?modules'` option in `css-loader`. This module works by prefixing every rule with `":local(.style) "` which the `css-loader` then changes to a hash and makes it available as `{style}`
 ```json
 loader: 'css-loader?modules!namespace-css-module-loader' // << won't work
                     ^^^^^^^

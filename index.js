@@ -4,7 +4,7 @@ var pkg = require('./package.json');
 
 var plugin = postcss.plugin(pkg.name, function(opts) {
   opts = opts || {}
-  var id = opts.id || 'root'
+  var id = opts.id || 'style'
   return function(root) {
     return root.walkRules(function(rule) {
       rule.selector = ':local(.' + id + ') ' + rule.selector;
