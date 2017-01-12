@@ -66,12 +66,12 @@ loader: 'css-loader?importLoaders=3!postcss-loader!namespace-css-module-loader!s
 
 #### `id`
 
-Pass an `'id=…'` to change the default named import `{style}`:
+Change the default named export `{style}`:
 ```json
 loader: 'css-loader!namespace-css-module-loader?id=root'
 ```
 ```js
-import {root} from './style.scss';
+import {root} from './app.scss';
 ...
 <div className={root}>
 ```
