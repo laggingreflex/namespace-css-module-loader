@@ -76,6 +76,23 @@ import {root} from './app.scss';
 <div className={root}>
 ```
 
+#### `descendant`
+
+(default: true)
+
+Making rule a descendant of the namespace (default)
+```json
+loader: 'css-loader!namespace-css-module-loader?descendant'
+```
+input:
+```css
+.a .b {...}
+```
+output:
+```css
+.2Jlr3B .a .b {...}
+```
+
 #### `combine`
 
 Combine the rule with the namespace instead of making it a descendant
@@ -86,15 +103,25 @@ input:
 ```css
 .a .b {...}
 ```
-with `combine`:
+output:
 ```css
 .a.2Jlr3B .b {...}
 ```
-without `combine` (default):
-```css
-.2Jlr3B .a .b {...}
-```
 
+#### `combine` & `descendant`
+
+Both options can be used together to group the rules:
+```json
+loader: 'css-loader!namespace-css-module-loader?combine&descendant'
+```
+input:
+```css
+.a .b {...}
+```
+output:
+```css
+.a.2Jlr3B .b, .2Jlr3B .a .b {...}
+```
 
 ## Issues
 

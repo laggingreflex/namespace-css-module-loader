@@ -41,7 +41,14 @@ describe('plugin', () => {
     `.a
     .b {}`, { combine: true }
   ).then(css => assert.equal(css,
-    ':global .a:local(.style) .b {}'
+    `:global .a:local(.style)
+    .b {}`
+  )));
+
+  it('should process combined & descendant', () => process(
+    '.a .b {}', { combine: true, descendant: true }
+  ).then(css => assert.equal(css,
+    ':global .a:local(.style) .b, :global :local(.style) .a .b {}'
   )));
 
 });
