@@ -70,20 +70,3 @@ import {root} from './style.scss';
 ...
 <div className={root}>
 ```
-**DO NOT** use `'?modules'` option in `css-loader`. This module works by prefixing every rule with `":local(.style) "` which the `css-loader` then changes to a hash and makes it available as `{style}`
-```json
-loader: 'css-loader?modules!namespace-css-module-loader' // << won't work
-                    ^^^^^^^
-```
-If you use `'?modules'` option in `css-loader` then instead of this:
-```css
-.2Jlr3B .a {
-  background: blue;
-}
-```
-you'll get this:
-```css
-.r7lm3B .5glT3B {
-  background: blue;
-}
-```
