@@ -61,6 +61,11 @@ Use it after pre-processors, it only works on pure CSS
 loader: 'css-loader?importLoaders=3!postcss-loader!namespace-css-module-loader!sass-loader'
                                          ...      <-          ^               <-  pre
 ```
+
+### Options
+
+#### `id`
+
 Pass an `'id=…'` to change the default named import `{style}`:
 ```json
 loader: 'css-loader!namespace-css-module-loader?id=root'
@@ -70,3 +75,15 @@ import {root} from './style.scss';
 ...
 <div className={root}>
 ```
+
+## Issues
+
+### Hot Module Replacement
+
+It probably has nothing to do with this module but if HMR isn't working correctly try adding [webpack-module-hot-accept] to all your JS files.
+
+> it hot-reloads only if [you] have a module.hot.accept() call in the JS that require-s the CSS Module. ([react-css-modules#51](https://github.com/gajus/react-css-modules/issues/51))
+
+related: [css-loader#186](https://github.com/webpack/css-loader/issues/186)
+
+[webpack-module-hot-accept]: https://github.com/loggur/webpack-module-hot-accept
