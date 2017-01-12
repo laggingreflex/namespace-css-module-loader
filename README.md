@@ -1,50 +1,38 @@
 # namespace-css-module-loader
 
-Webpack CSS Module loader to namespace all rules with a single hash.
+[![npm](https://img.shields.io/npm/v/namespace-css-module-loader.svg)](https://www.npmjs.com/package/namespace-css-module-loader)
 
-## input
+[Webpack]'s [css-loader] implements [CSS Modules] by giving every `.class` a unique hash which you then have to bind to your element/complement.
+
+[CSS Modules]: https://github.com/css-modules/css-modules
+[webpack]: http://webpack.js.org
+[css-loader]: https://github.com/webpack/css-loader
+
 ```css
-.a {
-  background: blue;
-}
-.b {
-  background: red;
-}
+.a { ... }
+.b { ... }
 ```
-## output
-### with regular CSS Modules:
-a different hash for each rule:
+output with regular CSS Modules (webpack css-loader):
 ```css
-.dz1R8A {
-  background: blue;
-}
-.JkxzOD {
-  background: red;
-}
+.dz1R8A {  /* a different hash */ }
+.JkxzOD {  /* for each rule */ }
 ```
-### with **this** module:
-a different hash for each ***file*** shared by all rules in it:
+
+**namespace-css-module-loader**, as the name suggests, only gives **one** unique **hash** (a namespace) to **all** rules:
+
 ```css
-.2Jlr3B .a {          // both “wrapped” in the same hash
-  background: blue;
-}
-.2Jlr3B .b {          // giving your rules a single namespace
-  background: red;
-}
+.2Jlr3B .a { /* both “wrapped” in the same hash */ }
+.2Jlr3B .b { /* giving your rules a single namespace */ }
 ```
-The hash is available as named export: `{style}`. You only need to include this in the parent `div`:
+
+This hash is available as a single named export: `{style}` which you only need to include in the parent `div`:
+
 ```js
 import {style} from './style.scss';
-export default () => <div>
-    <div className={style}>
-        <div class='a'></div> // blue
-        <div class='a'></div> // red
-    </div>
-    <div>
-        <div class='a'></div> // not blue
-        <div class='a'></div> // not red
-    </div>
-</div>;
+export default <div className={style}>
+  <div class='a'></div>
+  <div class='b'></div>
+</div>
 ```
 
 ## Install
@@ -64,62 +52,52 @@ loader: 'css-loader?importLoaders=3!postcss-loader!namespace-css-module-loader!s
 
 ### Options
 
-#### `id`
+Provide options to the module as a query string or query object
 
-Change the default named export `{style}`:
 ```json
 loader: 'css-loader!namespace-css-module-loader?id=root'
 ```
 ```js
+loader: ['css-loader', {
+  loader: 'namespace-css-module-loader',
+  query: {
+    id: 'root'
+  }
+}]
+```
+
+#### `id` (string) (default: 'style')
+
+Change the default named export `{style}`:
+```js
 import {root} from './app.scss';
-...
-<div className={root}>
+export default <div className={root}></div>
 ```
 
-#### `descendant`
+#### `descendant` (boolean) (default: true)
 
-(default: true)
-
-Making rule a descendant of the namespace (default)
-```json
-loader: 'css-loader!namespace-css-module-loader?descendant'
-```
-input:
+Make the rule descendant of the namespace (default)
 ```css
 .a .b {...}
-```
-output:
-```css
+/* => */
 .2Jlr3B .a .b {...}
 ```
 
-#### `combine`
+#### `combine` (boolean)
 
 Combine the rule with the namespace instead of making it a descendant
-```json
-loader: 'css-loader!namespace-css-module-loader?combine'
-```
-input:
 ```css
 .a .b {...}
-```
-output:
-```css
+/* => */
 .a.2Jlr3B .b {...}
 ```
 
 #### `combine` & `descendant`
 
 Both options can be used together to group the rules:
-```json
-loader: 'css-loader!namespace-css-module-loader?combine&descendant'
-```
-input:
 ```css
 .a .b {...}
-```
-output:
-```css
+/* => */
 .a.2Jlr3B .b, .2Jlr3B .a .b {...}
 ```
 
