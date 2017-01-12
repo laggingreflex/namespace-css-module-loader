@@ -76,6 +76,26 @@ import {root} from './app.scss';
 <div className={root}>
 ```
 
+#### `combine`
+
+Combine the rule with the namespace instead of making it a descendant
+```json
+loader: 'css-loader!namespace-css-module-loader?combine'
+```
+input:
+```css
+.a .b {...}
+```
+with `combine`:
+```css
+.a.2Jlr3B .b {...}
+```
+without `combine` (default):
+```css
+.2Jlr3B .a .b {...}
+```
+
+
 ## Issues
 
 ### Hot Module Replacement

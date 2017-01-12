@@ -19,4 +19,29 @@ describe('plugin', () => {
     ':global :local(.style) .a, :global :local(.style) .b {}'
   )));
 
+  it('should process combined rules', () => process(
+    '.a {}', { combine: true }
+  ).then(css => assert.equal(css,
+    ':global .a:local(.style) {}'
+  )));
+
+  it('should process combined grouped rules', () => process(
+    '.a, .b {}', { combine: true }
+  ).then(css => assert.equal(css,
+    ':global .a:local(.style), :global .b:local(.style) {}'
+  )));
+
+  it('should process combined child rules', () => process(
+    '.a .b {}', { combine: true }
+  ).then(css => assert.equal(css,
+    ':global .a:local(.style) .b {}'
+  )));
+
+  it('should process combined child rules with newline', () => process(
+    `.a
+    .b {}`, { combine: true }
+  ).then(css => assert.equal(css,
+    ':global .a:local(.style) .b {}'
+  )));
+
 });
