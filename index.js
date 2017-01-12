@@ -1,17 +1,6 @@
 var loaderUtils = require('loader-utils');
 var postcss = require('postcss');
-var pkg = require('./package.json');
-
-var plugin = postcss.plugin(pkg.name, function(opts) {
-  opts = opts || {}
-  var id = opts.id || 'style'
-  return function(root) {
-    return root.walkRules(function(rule) {
-      if (rule.selector.substr(0, 7) === ':global') return;
-      rule.selector = ':global :local(.' + id + ') ' + rule.selector;
-    })
-  }
-});
+var plugin = require('./plugin');
 
 module.exports = function processCss(content) {
   var callback = this.async();

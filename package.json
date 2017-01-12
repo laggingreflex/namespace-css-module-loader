@@ -2,7 +2,7 @@
   "name": "namespace-css-module-loader",
   "version": "0.3.1",
   "description": "Webpack CSS Module loader to namespace all rules with a single hash",
-  "files": [],
+  "files": ["plugin.js"],
   "repository": "laggingreflex/namespace-css-module-loader",
   "dependencies": {
     "loader-utils": "^0.2.16",
