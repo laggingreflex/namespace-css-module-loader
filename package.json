@@ -1,6 +1,6 @@
 {
   "name": "namespace-css-module-loader",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Webpack CSS Module loader to namespace all rules with a single hash",
   "main": "index.js",
   "files": [
