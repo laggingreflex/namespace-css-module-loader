@@ -2,6 +2,7 @@
   "name": "namespace-css-module-loader",
   "version": "0.4.0",
   "description": "Webpack CSS Module loader to namespace all rules with a single hash",
+  "main": "index.js",
   "files": [
     "plugin.js"
   ],
@@ -9,5 +10,11 @@
   "dependencies": {
     "loader-utils": "^0.2.16",
     "postcss": "^5.0.6"
-  }
+  },
+  "keywords": [
+    "webpack",
+    "webpack-loader",
+    "css",
+    "css-modules"
+  ]
 }
