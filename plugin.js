@@ -6,7 +6,7 @@ module.exports = postcss.plugin(pkg.name, plugin);
 function plugin(opts) {
   opts = opts || {}
   var id = opts.id || 'style'
-  var local = ':local(.' + id + ')'
+  var local = opts.rootClass ? ( '.' + opts.rootClass) : (':local(.' + id + ')')
   return function(root) {
     return root.walkRules(function(rule) {
       if (rule.selector.substr(0, 7) === ':global') return;

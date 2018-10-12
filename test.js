@@ -51,4 +51,10 @@ describe('plugin', () => {
     ':global .a:local(.style) .b, :global :local(.style) .a .b {}'
   )));
 
+  it('should process rootClass', () => process(
+    '.a .b {}', { rootClass: 'rootClass' }
+  ).then(css => assert.equal(css,
+    ':global .rootClass .a .b {}'
+  )));
+
 });
