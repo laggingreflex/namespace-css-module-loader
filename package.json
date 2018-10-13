@@ -3,9 +3,9 @@
   "version": "0.4.1",
   "description": "Webpack CSS Module loader to namespace all rules with a single hash",
   "main": "index.js",
-  "files": [
-    "plugin.js"
-  ],
+  "scripts": {
+    "test": "mocha"
+  },
   "repository": "laggingreflex/namespace-css-module-loader",
   "dependencies": {
     "loader-utils": "^0.2.16",
@@ -16,5 +16,8 @@
     "webpack-loader",
     "css",
     "css-modules"
-  ]
+  ],
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
 }
