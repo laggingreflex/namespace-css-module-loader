@@ -9,7 +9,8 @@
   "repository": "laggingreflex/namespace-css-module-loader",
   "dependencies": {
     "loader-utils": "^0.2.16",
-    "postcss": "^5.0.6"
+    "postcss": "^5.0.6",
+    "scalpel": "^2.0.0"
   },
   "keywords": [
     "webpack",

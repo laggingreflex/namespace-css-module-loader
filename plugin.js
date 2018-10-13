@@ -1,7 +1,11 @@
 var postcss = require('postcss');
+var { createGenerator, createParser } = require('scalpel');
 var pkg = require('./package.json');
 
 module.exports = postcss.plugin(pkg.name, plugin);
+
+const generator = createGenerator();
+const parser = createParser();
 
 function plugin(opts) {
   opts = opts || {}
@@ -9,6 +13,11 @@ function plugin(opts) {
   var local = ':local(.' + id + ')'
   return function(root) {
     return root.walkRules(function(rule) {
+      // console.log({ 'rule.selector': rule.selector });
+      // const tokens = parser.parse(rule.selector);
+      // console.log({ tokens });
+
+
       if (rule.selector.substr(0, 7) === ':global') return;
 
       rule.selectors = rule.selectors.map(selector => {
