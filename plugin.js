@@ -8,7 +8,12 @@ function plugin(opts) {
   var id = opts.id || 'style'
   var local = opts.rootClass ? ( '.' + opts.rootClass) : (':local(.' + id + ')')
   return function(root) {
-    return root.walkRules(function(rule) {
+    var keyframes = [];
+    root.walkAtRules(/(keyframes)$/, function (rule) {
+      keyframes.push(rule);
+      rule.remove();
+    });
+    var result = root.walkRules(function (rule) {
       if (rule.selector.substr(0, 7) === ':global') return;
 
       rule.selectors = rule.selectors.map(selector => {
@@ -24,5 +29,11 @@ function plugin(opts) {
         }
       });
     })
+
+    keyframes.map(keyframe => {
+      root.append(keyframe);
+    });
+
+    return result;
   }
 }
