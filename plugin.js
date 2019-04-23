@@ -4,11 +4,16 @@ var pkg = require('./package.json');
 module.exports = postcss.plugin(pkg.name, plugin);
 
 function plugin(opts) {
-  opts = opts || {}
-  var id = opts.id || 'style'
-  var local = opts.rootClass ? ( '.' + opts.rootClass) : (':local(.' + id + ')')
-  return function(root) {
-    return root.walkRules(function(rule) {
+  opts = opts || {};
+  var id = opts.id || 'style';
+  var local = opts.rootClass ? ('.' + opts.rootClass) : (':local(.' + id + ')');
+  return function (root) {
+    var keyframes = [];
+    root.walkAtRules(/(keyframes)$/, function (rule) {
+      keyframes.push(rule);
+      rule.remove();
+    });
+    var result = root.walkRules(function (rule) {
       if (rule.selector.substr(0, 7) === ':global') return;
 
       rule.selectors = rule.selectors.map(selector => {
@@ -23,6 +28,12 @@ function plugin(opts) {
           return descendant
         }
       });
-    })
+    });
+
+    keyframes.map(keyframe => {
+      root.append(keyframe);
+    });
+
+    return result;
   }
 }
